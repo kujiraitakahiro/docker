@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="ja">
+<html><head>
+<title>**EMON by HTML5</title>
+<meta charset="UTF-8">
+<script>
+function DRW() {
+    var CVS = document.getElementById("CVS");
+    var CNT = CVS.getContext("2d");
+    CNT.lineWidth = 3;
+    CNT.strokeStyle = '#000000';
+//circle6
+    CNT.beginPath();
+    var SANG = 0;
+    var EANG = 360 * Math.PI / 180;
+    CNT.fillStyle = 'rgba(0, 191, 255, 0.7)';
+    CNT.arc(275, 275, 225, SANG, EANG, false);
+    CNT.fill();
+    CNT.stroke();
+//circle3
+    CNT.beginPath();
+    var SANG = 312 * Math.PI / 180;
+    var EANG = 245.5 * Math.PI / 180;
+    CNT.fillStyle = 'rgba(248, 248, 255, 1)';
+    CNT.arc(275, 300, 175, SANG, EANG, false);
+    CNT.fill();
+    CNT.stroke();
+//circle1
+    CNT.beginPath();
+    var SANG = 20;
+    var EANG = 180 * Math.PI / 180;
+    CNT.arc(275, 260, 162.5, SANG, EANG, false);
+    CNT.stroke();
+//circle2
+    CNT.beginPath();
+    var SANG = 0;
+    var EANG = 360 * Math.PI / 180;
+    CNT.fillStyle = 'rgba(255, 0, 0, 1)';
+    CNT.arc(282.5, 200, 32.5, SANG, EANG, false);
+    CNT.fill();
+    CNT.stroke();
+//circle4
+    CNT.beginPath();
+    var SANG = 0;
+    var EANG = 360 * Math.PI / 180;
+    CNT.fillStyle = 'rgba(248, 248, 255, 1)';
+    CNT.arc(347.5, 147.5, 50, SANG, EANG, false);
+    CNT.fill();
+    CNT.stroke();
+//circle5
+    CNT.beginPath();
+    var SANG = 0;
+    CNT.fillStyle = 'rgba(248, 248, 255, 1)';
+    var EANG = 360 * Math.PI / 180;
+    CNT.arc(250, 125, 50, SANG, EANG, false);
+    CNT.fill();
+    CNT.stroke();
+//circle7
+    CNT.beginPath()
+    var SANG = 180 * Math.PI / 180;
+    var EANG = 0 * Math.PI / 180;
+    CNT.arc(262.5, 125, 12.5, SANG, EANG, false);
+    CNT.stroke();
+//circle8
+    CNT.beginPath();
+    var SANG = 180 * Math.PI / 180;
+    var EANG = 0 * Math.PI / 180;
+    CNT.arc(325, 137.5, 12.5, SANG, EANG, false);
+    CNT.stroke();
+//line1
+    CNT.beginPath();
+    CNT.moveTo(125, 175);
+    CNT.lineTo(212.5, 212.5);
+//line2
+    CNT.moveTo(87.5, 225);
+    CNT.lineTo(212.5, 250);
+//line3
+    CNT.moveTo(100, 287.5);
+    CNT.lineTo(212.5, 285);
+//line4
+    CNT.moveTo(425, 200);
+    CNT.lineTo(325, 225);
+//line5
+    CNT.moveTo(437.5, 275);
+    CNT.lineTo(325, 262.5);
+//line6
+    CNT.moveTo(437.5, 350);
+    CNT.lineTo(325, 300);
+//line7
+    CNT.moveTo(237.5, 375);
+    CNT.lineTo(275, 235);
+ //trace lines
+    CNT.stroke();
+}
+</script>
+<style>
+p {
+    color: navy;
+    background-color: olive;
+    }
+H1 {
+    color: green;
+    background-color: black;
+    }
+body {
+#    background-color: rgb(200,255,0);
+    background-color: azure;
+    }
+</style>
+</head>
+<body>
+<H1>**EMON by HTML5</H1>
+<p>Presented by yourname!!</p>
+<input type="button" id="BTN" onclick="DRW()" value="Please click!!">
+<canvas id="CVS" width="600" height="600">
+</canvas>
+</body>
+</html>
