@@ -1,0 +1,15 @@
+{
+    "listeners": {
+        "127.0.0.1:80": {
+            "pass": "routes"
+        }
+     },
+
+    "routes": [
+        {
+            "action": {
+                "share": "/www/data/static/html/"
+             }
+        }
+    ]
+}
