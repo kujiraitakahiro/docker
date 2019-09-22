@@ -19,7 +19,7 @@ bash-3.2$ docker ps
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                  NAMES
 8bfa73fd9f75        nginx/unit          "unitd --no-daemon -…"   6 seconds ago       Up 4 seconds        0.0.0.0:8080->80/tcp   nervous_ishizaka
 
-
+bash-3.2$ docker exec -it 8bfa73fd9f75 bash
 root@8bfa73fd9f75:/# curl --unix-socket /var/run/control.unit.sock http://localhost
 {
 	"certificates": {},
@@ -31,8 +31,7 @@ root@8bfa73fd9f75:/# curl --unix-socket /var/run/control.unit.sock http://localh
 
 root@8bfa73fd9f75:/# mkdir -p /www/data/static/html/
 root@8bfa73fd9f75:/# ls /www/data/static/html/
-
-root@8bfa73fd9f75:/# echo "nginx unit's Static file function TEST" > index.ht
+root@8bfa73fd9f75:/# echo "nginx unit's Static file function TEST" > index.html
 root@8bfa73fd9f75:/# cat index.html
 nginx unit's Static file function TEST
 
