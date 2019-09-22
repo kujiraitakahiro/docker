@@ -1,0 +1,105 @@
+bash-3.2$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+bash-3.2$ docker pull nginx/unit
+Using default tag: latest
+latest: Pulling from nginx/unit
+8f91359f1fff: Pull complete
+47299d66a23f: Pull complete
+2b60faa4e81d: Pull complete
+Digest: sha256:5d9ae1e9a9353ede5ea9ba3de3d0e235332b631e348ebaf2f4680a951b720cf4
+Status: Downloaded newer image for nginx/unit:latest
+docker.io/nginx/unit:latest
+bash-3.2$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+nginx/unit          latest              9ffd0ad66444        2 days ago          216MB
+
+bash-3.2$ docker run -d -p 8080:80 nginx/unit
+8bfa73fd9f7549a110c19546f56a1003f945c3db28b976b443b5caaf12b648c4
+bash-3.2$ docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                  NAMES
+8bfa73fd9f75        nginx/unit          "unitd --no-daemon -…"   6 seconds ago       Up 4 seconds        0.0.0.0:8080->80/tcp   nervous_ishizaka
+
+
+root@8bfa73fd9f75:/# curl --unix-socket /var/run/control.unit.sock http://localhost
+{
+	"certificates": {},
+	"config": {
+		"listeners": {},
+		"applications": {}
+	}
+}
+
+root@8bfa73fd9f75:/# mkdir -p /www/data/static/html/
+root@8bfa73fd9f75:/# ls /www/data/static/html/
+
+root@8bfa73fd9f75:/# echo "nginx unit's Static file function TEST" > index.ht
+root@8bfa73fd9f75:/# cat index.html
+nginx unit's Static file function TEST
+
+bash-3.2$ cat static_file.json
+{
+    "listeners": {
+        "127.0.0.1:80": {
+            "pass": "routes"
+        }
+     },
+
+    "routes": [
+        {
+            "action": {
+                "share": "/www/data/static/html/"
+             }
+        }
+    ]
+}
+bash-3.2$ docker cp ./static_file.json 8bfa73fd9f75:/tmp
+
+root@8bfa73fd9f75:/# cd /tmp
+root@8bfa73fd9f75:/tmp# ls
+static_file.json
+
+root@8bfa73fd9f75:/tmp# curl -X PUT -d @/tmp/static_file.json --unix-socket /var/run/control.unit.sock http://localhost/config/
+{
+	"success": "Reconfiguration done."
+}
+root@8bfa73fd9f75:/tmp# curl --unix-socket /var/run/control.unit.sock http://localhost
+{
+	"certificates": {},
+	"config": {
+		"listeners": {
+			"127.0.0.1:80": {
+				"pass": "routes"
+			}
+		},
+
+		"routes": [
+			{
+				"action": {
+					"share": "/www/data/static/html/"
+				}
+			}
+		]
+	}
+}
+root@8bfa73fd9f75:/tmp# curl http://localhost/
+nginx unit's Static file function TEST
+root@8bfa73fd9f75:/tmp# curl -vL 127.0.0.1:80/
+*   Trying 127.0.0.1...
+* TCP_NODELAY set
+* Connected to 127.0.0.1 (127.0.0.1) port 80 (#0)
+> GET / HTTP/1.1
+> Host: 127.0.0.1
+> User-Agent: curl/7.52.1
+> Accept: */*
+>
+< HTTP/1.1 200 OK
+< Last-Modified: Sun, 22 Sep 2019 11:45:54 GMT
+< ETag: "5d875ef2-27"
+< Content-Type: text/html
+< Server: Unit/1.11.0
+< Date: Sun, 22 Sep 2019 11:54:32 GMT
+< Content-Length: 39
+<
+nginx unit's Static file function TEST
+* Curl_http_done: called premature == 0
+* Connection #0 to host 127.0.0.1 left intact
